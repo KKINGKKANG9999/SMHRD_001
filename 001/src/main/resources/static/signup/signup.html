@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" translate="no">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="google" content="notranslate">
+    <title>전여친 - 회원가입</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./signup.css" />
+    <script defer src="/signup/signup.js"></script>
+</head>
+
+<body>
+    <div class="overlay">
+        <header class="app-header">
+            <span class="material-icons menu-toggle" id="backButton" onclick="history.back()">chevron_left</span>
+            <div class="logo">전여친</div>
+            <span class="material-icons" style="visibility: hidden;">menu</span>
+        </header>
+        <main class="signup-main">
+            <form class="signup-form" autocomplete="off">
+                <div class="input-group email"><input type="email" id="useremail" placeholder="이메일" /></div>
+                <div class="input-group id"><input type="text" id="usernick"placeholder="닉네임"/></div>
+                <div class="input-group pw"><input type="password" id="userpassword" placeholder="비밀번호"/></div>
+                <div class="input-group pw"><input type="password" id="confirmpassword" placeholder="비밀번호"/></div>
+                <div class="space-box"></div>
+                <div class="input-group name"><input type="text" id="username" placeholder="이름"/></div>
+                <div class="input-group date-of-birth"><input type="text" id="userbirth" placeholder="생년월일ex)19991010" /></div>
+                <div class="space-box"></div>
+
+                <div class="input-group agree-group"><input type="checkbox" id="agreeAll" /><label for="agreeAll">인증 약관
+                        전체 동의</label></div>
+                <button type="button" id="signup-btn" class="signup-btn">회원가입</button>
+            </form>
+            <div style="margin-top:16px;">
+                <a href="/login/login.html">로그인으로 돌아가기</a>
+            </div>
+            <div style="margin-top:16px; color:#888;"></div>
+        </main>
+    </div>
+</body>
+
+</html>

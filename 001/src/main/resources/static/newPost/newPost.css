@@ -1,0 +1,265 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Pretendard', sans-serif;
+  background: #fff;
+  color: #222;
+  overflow-x: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 24px;
+  border-bottom: 1px solid #eee;
+  background: white;
+  color: #2196f3;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+#backButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2196f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.form-container {
+  padding: 20px 24px 100px 24px;
+  /* 하단에 100px 여백 추가 */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  margin-left: 8px;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+
+
+/* textarea placeholder 스타일 cross-browser 적용 */
+
+#title::placeholder,
+#content::placeholder,
+#tagInput::placeholder {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 0.8rem;
+  font-weight:400;
+  color: #999;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row .category {
+
+  flex: 0 0 80px;
+}
+
+.form-row .title {
+  flex: 1;
+}
+
+input[type="text"],
+select,
+textarea {
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: 'Pretendard', sans-serif;
+
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  font-size: 1rem;
+  background: #f9f9f9;
+  width: 100%;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #1976d2;
+  box-shadow: 0 2px 12px rgba(33, 150, 243, 0.3);
+
+}
+
+textarea {
+  resize: none;
+  height: 160px;
+}
+
+.map-select {
+  width: 100%;
+  height: 120px;
+  background: #ecf5ffcc;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: #2196f3;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.photo-box {
+  width: 80px;
+  height: 80px;
+  flex: none;
+  max-width: none;
+  aspect-ratio: unset;
+  background: #ecf5ffcc;
+  border: 1px solid #2196f3;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #2196f3;
+  cursor: pointer;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+  .photo-box {
+    width: 80px;
+    height: 80px;
+    font-size: 1.2rem;
+  }
+}
+
+.submit-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  background: #2196f3;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 100;
+}
+
+
+
+.selected-tags {
+  margin-top: 4px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  min-height: 40px;
+  border: 1px solid #e0e0e0;
+}
+
+.selected-tags .tag-chip {
+  display: inline-block;
+  background: #2196f3;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  margin: 0px 4px 0px 0;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.selected-tags .tag-chip:hover {
+  background: #5bc0de;
+}
+
+.selected-tags .tag-chip::after {
+  content: '×';
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+#tagInput {
+  transition: border-color 0.2s ease;
+}
+
+#tagInput:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(109, 213, 237, 0.2);
+}
+
+/* 드롭다운 스타일 */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #f9f9f9 url('data:image/svg+xml;utf8,<svg fill="%232196f3" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 1.2em center/1.2em 1.2em;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  color: #777;
+  padding: 14px 40px 14px 14px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+select:focus {
+  outline: none;
+  border: 1px solid #1976d2;
+  box-shadow: 0 2px 12px rgba(33, 150, 243, 0.3);
+}
+
+select,
+select option {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+select option {
+  background: #fff;
+  color: #555;
+}

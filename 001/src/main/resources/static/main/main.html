@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <title>Test User Form</title>
+    <link rel="stylesheet" href="/main/main.css">
+</head>
+
+<body>
+    <h1>👤 TestUser 등록</h1>
+
+    <form id="userForm">
+        <label>Username: <input type="text" id="username" required></label><br><br>
+        <label>Email: <input type="email" id="email" required></label><br><br>
+        <label>Password: <input type="password" id="password" required></label><br><br>
+        <button type="submit">등록</button>
+    </form>
+
+    <div style="margin:16px 0;"></div>
+
+    <hr>
+    <h2>📋 전체 유저 목록</h2>
+    <button onclick="loadUsers()">유저 불러오기</button>
+    <ul id="userList"></ul>
+
+    <script src="/main/main.js"></script>
+</body>
+
+</html>

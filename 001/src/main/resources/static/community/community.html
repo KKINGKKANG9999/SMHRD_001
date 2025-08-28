@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전여친 커뮤니티</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/community/community.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <button id="backButton" class="back-button" onclick="window.location.href='/index/index.html'">
+            <span class="material-icons" style="font-size: 1.8rem;">chevron_left</span>
+        </button>
+        <div class="logo">전여친 커뮤니티</div>
+        <span class="material-icons" id="notificationBtn">notifications</span>
+    </header> <!-- 검색창 -->
+    <div class="search-bar">
+        <input id="communitySearchInput" type="text" placeholder="" autocomplete="off" />
+        <button><span class="material-icons">search</span></button>
+    </div>
+
+    <!-- 필터 -->
+    <div class="filters-wrapper">
+        <div class="filters">
+            <button class="active" data-type="전체">전체</button>
+            <button class="active" data-type="자유게시글">자유게시글</button>
+            <button class="active" data-type="후기">후기</button>
+            <button class="active" data-type="정보">정보</button>
+            <button class="active" data-type="질문">질문</button>
+        </div>
+    </div>
+
+    <section>
+        <h3 class="section-title">실시간 Q&A</h3>
+        <div class="horizontal-scroll qa-list">
+            <div class="qa-card" onclick="window.location.href='/community/qa_detail.html'">Q. 강진수국길축제 일정이 어떻게 되나요?
+            </div>
+            <div class="qa-card" onclick="window.location.href='/community/qa_detail.html'">Q. 목포 장미의 거리 위치 알려주세요</div>
+            <div class="qa-card" onclick="window.location.href='/community/qa_detail.html'">Q. 전남 축제 추천 좀!</div>
+            <div class="qa-card" onclick="window.location.href='/community/qa_detail.html'">Q. 전시회 정보 궁금해요</div>
+        </div>
+    </section>
+    <section>
+        <h3 class="section-title">추천 전남 스팟</h3>
+        <div class="horizontal-scroll spot-list">
+            <div class="spot-card" onclick="window.location.href='/tripinfo/tripInfo.html'">
+                <div class="spot-img"><img src="../common/spot-001.jpg" alt=""></div>
+                <div class="spot-title">목포 장미의 거리</div>
+            </div>
+            <div class="spot-card" onclick="window.location.href='/tripinfo/tripInfo.html'">
+                <div class="spot-img"><img src="../common/spot-002.jpg" alt=""></div>
+                <div class="spot-title">강진수국길</div>
+            </div>
+            <div class="spot-card" onclick="window.location.href='/tripinfo/tripInfo.html'">
+                <div class="spot-img"><img src="../common/spot-003.jpg" alt=""></div>
+                <div class="spot-title">목포 해상 W쇼</div>
+            </div>
+        </div>
+    </section>
+    <div class="community-list" id="communityList">
+        <div class="community-card" data-type="자유게시글" onclick="window.location.href='/community/post_detail.html'">
+            <div class="card-header">
+                <div class="card-profile"></div>
+                <div class="card-meta">
+                    <div class="card-type">자유게시글</div>
+                    <div class="card-title">제목</div>
+                </div>
+                <div class="card-info">
+                    <div class="card-author">작성자</div>
+                    <div class="card-date">작성일자</div>
+                </div>
+            </div>
+            <div class="card-tags">#태그1 #태그2</div>
+            <div class="card-content">내용</div>
+        </div>
+        <div class="community-card" data-type="후기" onclick="window.location.href='/community/post_detail.html'">
+            <div class="card-header">
+                <div class="card-profile"></div>
+                <div class="card-meta">
+                    <div class="card-type">후기</div>
+                    <div class="card-title">제목</div>
+                </div>
+                <div class="card-info">
+                    <div class="card-author">작성자</div>
+                    <div class="card-date">작성일자</div>
+                </div>
+            </div>
+            <div class="card-tags">#태그1 #태그2</div>
+            <div class="card-content">W드론쇼 다녀왔어요!</div>
+        </div>
+        <div class="community-card" data-type="정보" onclick="window.location.href='/community/post_detail.html'">
+            <div class="card-header">
+                <div class="card-profile"></div>
+                <div class="card-meta">
+                    <div class="card-type">정보</div>
+                    <div class="card-title">제목</div>
+                </div>
+                <div class="card-info">
+                    <div class="card-author">작성자</div>
+                    <div class="card-date">작성일자</div>
+                </div>
+            </div>
+            <div class="card-tags">#태그1 #태그2</div>
+            <div class="card-content">목포 장미의 거리 꿀팁</div>
+        </div>
+        <div class="community-card" data-type="질문" onclick="window.location.href='/community/post_detail.html'">
+            <div class="card-header">
+                <div class="card-profile"></div>
+                <div class="card-meta">
+                    <div class="card-type">질문</div>
+                    <div class="card-title">제목</div>
+                </div>
+                <div class="card-info">
+                    <div class="card-author">작성자</div>
+                    <div class="card-date">작성일자</div>
+                </div>
+            </div>
+            <div class="card-tags">#태그1 #태그2</div>
+            <div class="card-content">전남 축제 중 추천?</div>
+        </div>
+    </div>
+
+    <button class="write-button" onclick="window.location.href='/newPost/newPost.html'">
+        <span class="material-icons">edit</span>
+    </button>
+    <script src="/community/community.js"></script>
+</body>
+
+</html>

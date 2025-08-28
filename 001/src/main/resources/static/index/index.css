@@ -1,0 +1,351 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    color: #000000;
+}
+
+body {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+}
+
+#map {
+    background-color: #e2e2e2;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 24px;
+    border-bottom: 1px solid #eee;
+    background: white;
+    color: #2196f3;
+    position: relative;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.menu-toggle {
+    cursor: pointer;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+#notificationBtn {
+    font-size: 1.4rem;
+}
+
+
+/* 사이드 메뉴 */
+.side-menu {
+    position: absolute;
+    top: calc(100%-1rem);
+    left: 0;
+    width: 48%;
+    max-width: 320px;
+    height: calc(100vh - 1rem);
+    background: white;
+    border-right: 1px solid #ddd;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2001;
+    /* 바텀시트(1000)보다 높게 */
+    padding: 24px;
+    pointer-events: auto;
+}
+
+.side-menu.show {
+    transform: translateX(0);
+}
+
+/* 사이드 메뉴 리스트 스타일 */
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-menu li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 4px solid #2196f3;
+    border-radius: 999px;
+    padding: 0.9rem 1.6rem;
+    margin: 20px 24px 9px 24px;
+    width: calc(100% - 48px);
+    /* 검색창 배경 반투명 블러 */
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 15;
+    pointer-events: auto;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    font-size: 1.1rem;
+    background: transparent;
+}
+
+.search-bar input::placeholder {
+    color: rgb(33, 150, 243, 0.6);
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 1;
+}
+
+.search-bar button {
+    color: #2196f3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.filters-wrapper {
+    overflow-x: auto;
+    padding: 0 24px;
+    /* 필터 배경 투명 */
+    background: rgba(255, 255, 255, 0);
+    position: relative;
+    z-index: 14;
+    pointer-events: auto;
+}
+
+.filters-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.filters {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+}
+
+.filters button:last-child {
+    margin-right: 0;
+    /* gap 효과 제거 */
+}
+
+.filters button:not(:last-child) {
+    margin-right: 0.4rem;
+}
+
+.filters button {
+    padding: 0.32rem 1rem;
+    border: 3px solid #2196f3;
+    border-radius: 20px;
+    color: #2196f3;
+    font-weight: 600;
+    font-size: 1.0rem;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    transition: background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+}
+
+.filters button.active {
+    background: #2196f3;
+    color: #fff;
+    border-color: #2196f3;
+}
+
+.filters::after {
+    content: "";
+    flex: 0 0 24px;
+}
+
+/* 태그 필터 - 사용되지 않음, 제거됨 */
+
+.write-button {
+    position: fixed;
+    bottom: 6rem;
+    right: 2rem;
+    color: #2196f3;
+    background: #ffffff;
+    border: 4px solid #2196f3;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+/* 사이드 메뉴 페이지 */
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2196f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+
+
+.menu-title {
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    padding-left: 8px;
+}
+
+.menu-title:hover {
+    cursor: pointer;
+}
+
+/* 메뉴 푸터 */
+
+.menu-item {
+    padding: 0;
+    padding-bottom: 8px;
+    padding-left: 0px;
+    margin-right: 16px;
+    border-bottom: 0.8px solid #2196f3;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.menu-item:hover {
+    background-color: #f5f5f5;
+}
+
+.side-menu h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2196f3;
+}
+
+.menu-footer {
+    position: absolute;
+    bottom: 10%;
+    transform: translateY(-50%);
+}
+
+.footer-item {
+    color: #2196f3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 8px 12px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.footer-item:hover {
+    background-color: #f5f5f5;
+}
+
+.footer-item .material-icons {
+    font-size: 1.2rem;
+    color: #2196f3;
+}
+
+#bottomSheet {
+    position: fixed;
+    bottom: 0;
+    left: 24px;
+    right: 24px;
+    height: 80px;
+    /* 접힌 상태 높이 (스크립트와 일치) */
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    transition: height 0.2s ease;
+    overflow: hidden;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
+    pointer-events: auto;
+}
+
+#dragHandle {
+    width: 140px;
+    height: 24px;
+    /* 실제 잡는 영역을 넓힘 */
+    background: none;
+    position: relative;
+    margin: 0 auto;
+    cursor: grab;
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+    z-index: 1001;
+    /* sheetContent보다 위에 */
+}
+
+#dragHandle .bar {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 8px;
+}
+
+#sheetContent {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 24px;
+    -webkit-overflow-scrolling: touch;
+    /* iOS에서 부드러운 스크롤 */
+    overscroll-behavior: contain;
+    /* 스크롤 바운스 방지 */
+    z-index: 1000;
+    /* dragHandle보다 아래 */
+    position: relative;
+}

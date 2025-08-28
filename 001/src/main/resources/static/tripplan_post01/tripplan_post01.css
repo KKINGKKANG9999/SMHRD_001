@@ -1,0 +1,535 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard', sans-serif;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box;
+}
+
+.page-container {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+    overflow: visible;
+}
+
+#map {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: 100vw;
+    min-height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    z-index: 1;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+    background: #eaf6fb;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    padding: 1rem 24px;
+    background: #fff;
+    color: #2196f3;
+    z-index: 100;
+    border-bottom: none;
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#backButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #2196f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+h1 {
+    display: none;
+}
+
+/* ===== 안내 텍스트 ===== */
+/* .instruction-text {
+    text-align: center;
+    color: #2193b0;
+    font-size: 1rem;
+    margin: 20px 0 ;
+    padding: 12px;
+    background: #eaf6fb;
+    border-radius: 8px;
+    border-left: 4px solid #6dd5ed;
+} */
+
+/* ===== 경로 플래너 ===== */
+#route-planner {
+    margin: 0;
+}
+
+.location-item,
+.waypoint-item {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    background: transparent;
+}
+
+.location-item {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+    background: transparent;
+}
+
+.location-item label {
+    min-width: 70px;
+    font-weight: 600;
+    color: #2193b0;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+input[type="text"],
+.waypoint-input-field {
+    height: 44px;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #2196f3;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    background: #ffffff;
+    transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+.waypoint-input-field:focus {
+    border-color: #2193b0;
+    outline: none;
+}
+
+/* ===== 지도 선택 모드 ===== */
+.map-selection-active {
+    border-color: #2196f3 !important;
+    box-shadow: 0 0 12px 4px rgb(33, 150, 243, 0.4) !important;
+    background: #ecf5ffcc !important;
+    animation: pulse-orange 2s infinite;
+}
+
+@keyframes pulse-orange {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(255, 152, 0, 0.1);
+    }
+}
+
+/* ===== 경유지 ===== */
+#waypoints-container {
+    margin: 8px 0;
+}
+
+.waypoint-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.waypoint-item:hover {
+    background: #f8f9fa;
+}
+
+.waypoint-action-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 12px;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.waypoint-action-icon.add {
+    background: #2196f3;
+    color: #fff;
+}
+
+.waypoint-action-icon.add:hover {
+    background: #2193b0;
+    transform: scale(1.05);
+}
+
+.waypoint-action-icon.remove {
+    background: #f32121;
+    color: #fff;
+}
+
+.waypoint-action-icon.remove:hover {
+    background: #f32121;
+    transform: scale(1.05);
+}
+
+.waypoint-text-label {
+    padding: 8px 8px;
+    color: #2196f3;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-block;
+    width: auto;
+    flex: none;
+    white-space: nowrap;
+}
+
+/* ===== 출발지/도착지 아이콘 및 텍스트 스타일 ===== */
+.location-action-icon {
+    background: #2196f3;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 12px;
+    transition: background 0.2s, transform 0.2s;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.location-action-icon .material-icons {
+    font-size: 1.1rem;
+}
+
+.location-text-label {
+    color: #666;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 8px;
+    min-width: 48px;
+    flex-shrink: 0;
+}
+
+.location-item input[type="text"] {
+    flex: 1;
+}
+
+.route-mode-select{
+    text-align: center;
+    padding: 14px 0 14px 0 ;
+}
+
+.routeMode{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.routeMode input[type="radio"] {
+    display: none;
+}
+
+.routeMode .material-icons {
+    font-size: 1.3rem;
+    color: #999;
+    transition: color 0.2s ease-in-out;
+}
+
+.routeMode.selected,
+.routeMode:hover {
+    background: #ecf5ff;
+    border-radius: 50%;
+}
+
+.routeMode.selected .material-icons {
+    color: #2196f3;
+    font-weight: bold;
+}
+
+/* ===== 경로 검색 버튼 ===== */
+/* .route-search-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #2196f3, #2193b0);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 18px 0 10px 0;
+    box-shadow: 0 2px 6px rgba(109, 213, 237, 0.10);
+    cursor: pointer;
+    transition: background 0.2s;
+} */
+
+.route-search-btn {
+    background: linear-gradient(90deg, #64b5f6 0%, #2196f3 100%);
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: 'Pretendard', sans-serif;
+    padding: 8px 20px;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+    transition: background 0.18s, box-shadow 0.18s;
+
+    display: block;
+    width: auto;
+    margin: 0 auto 4px auto;
+    z-index: 10000; */
+}
+
+.route-search-btn:hover,
+.route-search-btn:focus {
+    background: linear-gradient(90deg, #2196f3 0%, #64b5f6 100%);
+    box-shadow: 0 4px 16px rgba(33, 150, 243, 0.13);
+}
+
+
+.route-search-btn:hover {
+    background: linear-gradient(90deg, #2193b0, #2196f3);
+}
+
+/* ===== 다음 페이지 링크 ===== */
+.next-page-link {
+    text-align: right;
+    margin-top: 18px;
+}
+
+.next-link {
+    font-size: 2rem;
+    color: #2196f3;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.next-link:hover {
+    color: #2193b0;
+}
+
+/* ===== 경로 정보 ===== */
+.route-info {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 12px;
+    border-left: 4px solid #2193b0;
+    box-shadow: 0 2px 8px rgba(109, 213, 237, 0.10);
+}
+
+.route-info h3 {
+    color: #2193b0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.route-info p {
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.route-info p:last-child {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+    font-size: 16px;
+    color: #2193b0;
+}
+
+/* 다음 페이지 이동 */
+.newplan-section {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 12vh;
+    z-index: 120;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newplan-btn-label {
+    font-size: 1.6rem;
+    color: #fff;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.newplan-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #2196f3;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.8rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.15s;
+    padding: 1px 6px;
+}
+
+.newplan-btn:active {
+    background: #bbb;
+}
+
+.newplan-btn .material-icons {
+    font-size: 1.8rem;
+}
+
+
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== 모바일 반응형 ===== */
+@media (max-width: 480px) {
+
+    h1 {
+        margin: 18px 0 12px;
+        font-size: 20px;
+    }
+
+    #map {
+        height: 320px;
+        margin: 12px 0;
+    }
+
+    .next-link {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .next-page-link {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* ===== 접근성 & 기타 ===== */
+.location-action-icon:focus,
+.waypoint-action-icon:focus,
+.route-search-btn:focus,
+.next-link:focus {
+    outline: 2px solid #2193b0;
+    outline-offset: 2px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+#route-planner-overlay {
+    position: absolute;
+    top: 70px;
+    /* 헤더 높이(60px) + 여유 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    max-width: 420px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(33, 147, 176, 0.10);
+    padding: 20px 16px 12px 16px;
+    backdrop-filter: blur(2px);
+    gap: 0px;
+}
+
+/* 지도 선택 안내 메시지 */
+.map-selection-guide {
+    position: fixed;
+    top: 80px; /* 헤더(60px) + 20px */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: block;
+    white-space: nowrap;
+}

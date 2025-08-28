@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" translate="no">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google" content="notranslate">
+  <title>글 작성</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/newPost/newPost.css">
+</head>
+
+<body>
+  <header class="app-header">
+    <button id="backButton" class="back-button" onclick="window.location.href='/index/index.html'">
+      <span class="material-icons" style="font-size: 1.8rem;">chevron_left</span>
+    </button>
+    <div class="logo">글 작성</div>
+    <span class="material-icons" style="opacity: 0">menu</span>
+  </header>
+
+  <div class="form-container">
+    <div class="form-group">
+      <label>위치 선택</label>
+      <div class="map-select" onclick="openMapSelector()">
+        지도에서 위치 선택하기
+      </div>
+      <div id="selected-coords" style="margin-top:8px; color:#2196f3; font-size:0.95em;"></div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group category">
+        <label for="category">카테고리</label>
+        <select id="category">
+          <option value="">선택</option>
+          <option value="후기">후기</option>
+          <option value="질문">질문</option>
+          <option value="정보">정보</option>
+          <option value="자유게시글">자유게시글</option>
+        </select>
+      </div>
+      <div class="form-group title">
+        <label for="title">제목</label>
+        <input type="text" id="title" placeholder="제목을 입력하세요" />
+      </div>
+    </div>    <div class="photo-grid">
+      <div class="photo-box">
+        <span class="material-icons">photo_camera</span>
+      </div>
+      <div class="photo-box">
+        <span class="material-icons">add</span>
+      </div>
+    </div>
+    <div class="photo-help-text" style="margin-top: 8px; font-size: 0.8rem; color: #666; text-align: center;">
+      💡 이미지는 자동으로 압축됩니다 (최대 5MB → 압축 후 업로드)
+    </div>
+
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="tagInput">태그 입력</label>
+      <input type="text" id="tagInput" placeholder="태그를 입력하고 Enter를 누르세요 (예: 후기, 맛집, 추천)" />
+      <div class="tag-input-help">
+        <small style="color: #999; font-size: 0.7rem;">쉼표(,)로 여러 태그를 한번에 입력하거나, 하나씩 입력 후 Enter를 눌러주세요.</small>
+      </div>
+      <div class="selected-tags" id="selectedTags">
+        <span style="color: #999; font-size: 0.8rem;">입력된 태그가 여기에 표시됩니다</span>
+      </div>
+    </div>
+
+    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none">
+    <input type="file" id="galleryInput" multiple accept="image/*" style="display:none">
+
+    <button class="submit-btn">등록</button>
+    <script src="/newPost/newPost.js"></script>
+    <script>
+      function openMapSelector() {
+        // mapSelect.html로 변경
+        window.open('/index/mapSelect.html', 'mapSelector', 'width=600,height=700');
+      }
+      // 좌표가 localStorage에 있으면 표시
+      function showSelectedCoords() {
+        const coords = localStorage.getItem('selectedCoords');
+        const el = document.getElementById('selected-coords');
+        if (coords) {
+          const { lat, lng } = JSON.parse(coords);
+          el.textContent = `선택한 위치: 위도 ${lat}, 경도 ${lng}`;
+        } else {
+          el.textContent = '';
+        }
+      }
+      window.addEventListener('focus', showSelectedCoords);
+      window.addEventListener('DOMContentLoaded', showSelectedCoords);
+    </script>
+</body>
+
+</html>

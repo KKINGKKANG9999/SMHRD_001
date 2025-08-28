@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" translate="no">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate">
+    <title>경로 설정</title>
+    <link rel="stylesheet" href="tripplan_post01.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+
+    <div class="page-container">
+        <header class="app-header">
+            <button id="backButton" class="back-button" onclick="history.back()">
+                <span class="material-icons" style="font-size: 1.8rem;">chevron_left</span>
+            </button>
+            <div class="logo">여행 경로 설정</div>
+            <span class="material-icons" style="visibility: hidden;">menu</span>
+        </header>
+        <div id="map"></div>
+        <div id="route-planner-overlay">
+            <div id="route-planner">
+                <div class="location-item">
+                    <span class="location-action-icon">
+                        <span class="material-icons">location_on</span>
+                    </span>
+                    <!-- <span class="location-text-label">출발지</span> -->
+                    <input type="text" id="start-point" placeholder="출발지를 선택하세요" readonly>
+                </div>
+                <div id="waypoints-container">
+                    <!-- 경유지 항목은 JS로 동적 추가됨, 샘플 1개만 남김 -->
+                    <div class="waypoint-item">
+                        <span class="waypoint-action-icon add">+</span>
+                        <span class="waypoint-text-label">경유지 추가</span>
+                        <input type="text" class="waypoint-input-field" placeholder="경유지를 선택하세요" style="display: none;"
+                            readonly>
+                    </div>
+                </div>
+                <div class="location-item">
+                    <span class="location-action-icon">
+                        <span class="material-icons">flag</span>
+                    </span>
+                    <!-- <span class="location-text-label">도착지</span> -->
+                    <input type="text" id="end-point" placeholder="도착지를 선택하세요" readonly>
+                </div>
+                <div class="route-mode-select">
+                    <label class="routeMode" data-mode="walking">
+                        <input type="radio" name="routeMode" value="walking" checked style="display:none;">
+                        <span class="material-icons">directions_walk</span>
+                    </label>
+                    <label class="routeMode" data-mode="driving">
+                        <input type="radio" name="routeMode" value="driving" style="display:none;">
+                        <span class="material-icons">directions_car</span>
+                    </label>
+                    <label class="routeMode" data-mode="transit">
+                        <input type="radio" name="routeMode" value="transit" style="display:none;">
+                        <span class="material-icons">directions_bus</span>
+                    </label>
+                </div>
+
+                <button class="route-search-btn" onclick="searchRoute()">
+                    경로 검색
+                </button>
+            </div>
+        </div>
+
+
+        <div id="route-info" style="display: none;"></div>
+
+
+        <section class="newplan-section">
+            <div class="newplan-btn-label"></div>
+            <button class="newplan-btn" aria-label="새 여행 플랜 만들기"
+                onclick="location.href='../tripplan_post02/tripplan_post02.html'">
+                <span class="material-icons">chevron_right</span>
+            </button>
+        </section>
+        <div class="next-page-link">
+            <a href="../tripplan_post02/tripplan_post02.html" class="next-link"
+                onclick="saveTripInfoForNextPage()">&gt;</a>
+        </div>
+    </div>
+    <script type="text/javascript"
+        src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=e696ij4ub6&callback=naverMapInit"></script>
+    <script src="tripplan_post01.js"></script>
+</body>
+
+</html>

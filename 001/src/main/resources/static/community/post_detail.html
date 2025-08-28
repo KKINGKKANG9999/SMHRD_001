@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>게시글 상세</title>
+    <link rel="stylesheet" href="/community/community.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
+    <script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=e696ij4ub6"></script>
+    <style>
+        .post-detail-container {
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .post-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+
+        .post-category {
+            display: inline-block;
+            background: #6dd5ed;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 8px 0;
+            line-height: 1.4;
+        }
+
+        .post-meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .post-tags {
+            margin: 12px 0;
+        }
+
+        .post-tag {
+            display: inline-block;
+            background: #e8f4fd;
+            color: #2193b0;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin: 2px 4px 2px 0;
+        }
+
+        .post-image {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .post-image img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            white-space: pre-wrap;
+        }
+
+        .no-post {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+
+        /* 댓글 섹션 스타일 */
+        .comments-section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 24px;
+        }
+
+        .comments-header {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .comment-input-area {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .comment-input {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #6dd5ed;
+            box-shadow: 0 0 0 2px rgba(109, 213, 237, 0.2);
+        }
+
+        .comment-submit-btn {
+            background: #6dd5ed;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 8px;
+            float: right;
+        }
+
+        .comment-submit-btn:hover {
+            background: #5bc0de;
+        }
+
+        .comment-submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .comments-list {
+            margin-top: 20px;
+        }
+
+        .comment-item {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .comment-author {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .comment-date {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .comment-content {
+            line-height: 1.5;
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: #888;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* 지도 스타일 */
+        .post-location {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .location-header {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-bottom: 1px solid #ddd;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .location-map {
+            width: 100%;
+            height: 300px;
+            background: #e2e2e2;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="app-header">
+        <button onclick="history.back()" class="back-button"
+            style="background:none; border:none; cursor:pointer; padding:0; margin-right:8px;">
+            <span class="material-icons"
+                style="font-size:1.8rem; color:#2196f3; vertical-align:middle;">chevron_left</span>
+        </button>
+        <div class="logo">게시글 상세</div>
+    </header>
+
+    <main class="post-detail-container" id="postDetailContainer">
+        <div class="no-post">
+            게시글을 불러오는 중...
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadPostDetail();
+        });
+
+        function loadPostDetail() {
+            const selectedPost = localStorage.getItem('selectedPost');
+            const container = document.getElementById('postDetailContainer');
+
+            if (!selectedPost) {
+                container.innerHTML = `
+                    <div class="no-post">
+                        <h3>게시글을 찾을 수 없습니다</h3>
+                        <p>커뮤니티 페이지에서 게시글을 선택해주세요.</p>
+                        <button onclick="window.location.href='/community/community.html'" 
+                                style="padding: 10px 20px; background: #6dd5ed; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 16px;">
+                            커뮤니티로 돌아가기
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                const post = JSON.parse(selectedPost);
+                displayPostDetail(post);
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="no-post">
+                        <h3>게시글 데이터 오류</h3>
+                        <p>게시글 정보를 불러올 수 없습니다.</p>
+                    </div>
+                `;
+            }
+        } function displayPostDetail(post) {
+            const container = document.getElementById('postDetailContainer');
+
+            // 태그 HTML 생성
+            const tagsHtml = post.tags && post.tags.length > 0
+                ? `<div class="post-tags">${post.tags.map(tag => `<span class="post-tag">#${tag}</span>`).join('')}</div>`
+                : '';
+
+            // 이미지 HTML 생성
+            let imageHtml = '';
+            if (post.cameraImage) {
+                imageHtml = `<div class="post-image"><img src="${post.cameraImage}" alt="게시글 이미지"></div>`;
+            } else if (post.galleryImages && post.galleryImages.length > 0) {
+                // 여러 이미지가 있는 경우 첫 번째 이미지만 표시 (나중에 갤러리로 확장 가능)
+                imageHtml = `<div class="post-image"><img src="${post.galleryImages[0]}" alt="게시글 이미지"></div>`;
+            }            // 작성일 포맷팅
+            const createdDate = post.createdAt ? new Date(post.createdAt).toLocaleDateString() : new Date().toLocaleDateString();
+
+            // 지도 HTML 생성
+            let locationHtml = '';
+            if (post.lat && post.lng) {
+                locationHtml = `
+                    <div class="post-location">
+                        <div class="location-header">📍 게시글 위치</div>
+                        <div id="postLocationMap" class="location-map"></div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="post-header">
+                    <div class="post-category">${post.category || '자유게시글'}</div>
+                    <h1 class="post-title">${post.title}</h1>
+                    <div class="post-meta">작성일: ${createdDate}</div>
+                    ${tagsHtml}
+                </div>
+                ${imageHtml}
+                <div class="post-content">${post.content}</div>
+                ${locationHtml}
+                
+                <!-- 댓글 섹션 -->
+                <div class="comments-section">
+                    <div class="comments-header">댓글 <span id="commentCount">0</span>개</div>
+                    
+                    <div class="comment-input-area clearfix">
+                        <textarea id="commentInput" class="comment-input" placeholder="댓글을 입력하세요..."></textarea>
+                        <button id="commentSubmitBtn" class="comment-submit-btn">댓글 작성</button>
+                    </div>
+                    
+                    <div class="comments-list" id="commentsList">
+                        <div class="no-comments">아직 댓글이 없습니다.<br>첫 번째 댓글을 작성해보세요!</div>
+                    </div>
+                </div>
+            `;
+
+            // 지도 초기화
+            if (post.lat && post.lng) {
+                initializeMap(post.lat, post.lng, post.title);
+            }
+
+            // 댓글 기능 초기화
+            initializeComments(post);
+        }
+
+        // 댓글 기능 초기화
+        function initializeComments(post) {
+            const commentInput = document.getElementById('commentInput');
+            const commentSubmitBtn = document.getElementById('commentSubmitBtn');
+
+            // 기존 댓글 로드
+            loadComments(post);
+
+            // 댓글 작성 버튼 이벤트
+            commentSubmitBtn.addEventListener('click', () => {
+                addComment(post);
+            });
+
+            // Enter + Ctrl 키로 댓글 작성
+            commentInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    e.preventDefault();
+                    addComment(post);
+                }
+            });
+
+            // 입력 상태에 따른 버튼 활성화
+            commentInput.addEventListener('input', () => {
+                const hasText = commentInput.value.trim().length > 0;
+                commentSubmitBtn.disabled = !hasText;
+            });
+        }
+
+        // 댓글 로드
+        function loadComments(post) {
+            const postId = getPostId(post);
+            const comments = JSON.parse(localStorage.getItem(`comments_${postId}`) || '[]');
+            displayComments(comments);
+        }
+
+        // 게시글 ID 생성 (제목과 작성시간 기반)
+        function getPostId(post) {
+            return btoa(encodeURIComponent(post.title + (post.createdAt || ''))).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
+        }
+
+        // 댓글 추가
+        function addComment(post) {
+            const commentInput = document.getElementById('commentInput');
+            const content = commentInput.value.trim();
+
+            if (!content) {
+                alert('댓글 내용을 입력해주세요.');
+                return;
+            }
+
+            const postId = getPostId(post);
+            const comments = JSON.parse(localStorage.getItem(`comments_${postId}`) || '[]');
+
+            const newComment = {
+                id: Date.now(),
+                content: content,
+                author: `사용자${Math.floor(Math.random() * 100) + 1}`,
+                createdAt: new Date().toISOString()
+            };
+
+            comments.push(newComment);
+            localStorage.setItem(`comments_${postId}`, JSON.stringify(comments));
+
+            // UI 업데이트
+            commentInput.value = '';
+            document.getElementById('commentSubmitBtn').disabled = true;
+            displayComments(comments);
+        }
+
+        // 댓글 표시
+        function displayComments(comments) {
+            const commentsList = document.getElementById('commentsList');
+            const commentCount = document.getElementById('commentCount');
+
+            commentCount.textContent = comments.length;
+
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<div class="no-comments">아직 댓글이 없습니다.<br>첫 번째 댓글을 작성해보세요!</div>';
+                return;
+            }
+
+            // 최신 댓글부터 표시
+            const commentsHtml = comments.reverse().map(comment => {
+                const commentDate = new Date(comment.createdAt).toLocaleString();
+                return `
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-author">${comment.author}</span>
+                            <span class="comment-date">${commentDate}</span>
+                        </div>
+                        <div class="comment-content">${comment.content}</div>
+                    </div>
+                `;
+            }).join(''); commentsList.innerHTML = commentsHtml;
+        }
+
+        // 지도 초기화 함수
+        function initializeMap(lat, lng, title) {
+            setTimeout(() => {
+                const mapElement = document.getElementById('postLocationMap');
+                if (!mapElement) return;
+
+                const map = new naver.maps.Map('postLocationMap', {
+                    center: new naver.maps.LatLng(lat, lng),
+                    zoom: 15,
+                    mapTypeControl: true
+                });
+
+                // 마커 생성
+                const marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(lat, lng),
+                    map: map
+                });
+
+                // 정보창 생성
+                const infoWindow = new naver.maps.InfoWindow({
+                    content: `
+                        <div style="padding:10px;min-width:150px;">
+                            <h4 style="margin:0 0 5px 0;color:#333;">${title}</h4>
+                            <p style="margin:0;color:#666;font-size:0.9em;">게시글 작성 위치</p>
+                        </div>
+                    `
+                });
+
+                // 마커 클릭 시 정보창 표시
+                naver.maps.Event.addListener(marker, 'click', () => {
+                    if (infoWindow.getMap()) {
+                        infoWindow.close();
+                    } else {
+                        infoWindow.open(map, marker);
+                    }
+                });
+            }, 100);
+        }
+    </script>
+</body>
+
+</html>
