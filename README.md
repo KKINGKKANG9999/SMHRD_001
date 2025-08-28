@@ -35,6 +35,7 @@
 ![sys_arch](./readme_img/image-8.png)
 
 10. 화면구성
+
 ![sys_arch](./readme_img/image-9.png)
 ![sys_arch](./readme_img/image-10.png)
 ![sys_arch](./readme_img/image-11.png)
