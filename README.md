@@ -1,8 +1,6 @@
-# 1-AYG
-팀명 : 한살차이
-
+# SMHRD_001
 1. 프로젝트명
-전남친 (전남여행친구)
+전남여행친구
 
 2. 서비스소개
 지도형 여행 커뮤니티 서비스
@@ -28,12 +26,19 @@
 ![sys_arch](./readme_img/image-4.png)
 
 7. 유스케이스
+![sys_arch](./readme_img/image-7.png)
 8. 서비스 흐름도
 ![flowchart1](./readme_img/image-5.png)
 ![flowchart2](./readme_img/image-6.png)
 
 9. ER 다이어그램
+![sys_arch](./readme_img/image-8.png)
+
 10. 화면구성
+![sys_arch](./readme_img/image-9.png)
+![sys_arch](./readme_img/image-10.png)
+![sys_arch](./readme_img/image-11.png)
+![sys_arch](./readme_img/image-12.png)
 
 11. 팀원역할
 | 이름   | 구분  | 역할                             |
@@ -51,3 +56,11 @@
 ![TROUBLE2](./readme_img/image-1.png)
 NULL 값에 PROPERTY 접근 한 것 확인 후 수정 + 정의 하지 않은 변수 사용 확인 후 수정
 
+  ·  문제 : API 호출 후 DOM 업데이트 시점이 꼬여 빈 화면/에러 발생
+  ·  해결 : async/await와 try-catch를 활용하고 로딩 스피너 UI를 추가
+
+  ·  문제 : 지도 API를 불러올 때 비동기 로딩 타이밍 때문에 마커/커스텀 오버레이가 정상적으로 표시되지 않음
+  ·  해결 : API 스크립트 로딩 후 window.onload 또는 DOMContentLoaded 이벤트에서 초기화 코드를 실행하도록 수정 → 안정적으로 지도와 핀 표시됨
+
+  ·  문제 : 프론트엔드에서 Open API(축제 정보, 행사 데이터 등)를 호출할 때 CORS 오류 발생
+  ·  해결 : 프록시 서버(백엔드)에서 API 호출을 중계하는 방식으로 수정 → 브라우저 요청 정상화
